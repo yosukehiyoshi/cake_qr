@@ -22,6 +22,39 @@ App::import(
 class QrHelper extends AppHelper {
 
 /**
+ * List of helpers used by this helper
+ * @var array
+ */
+	public $helpers = array('Html');
+
+/**
+ * Generate and return as HTML element
+ *
+ * @param string $filePath
+ * @param int $size Image size
+ * @param array $attributes HTML attributes
+ * @param string $url
+ * @return HTML element
+ */
+	public function html ($filePath, $size=150, $attributes=array()) {
+		if (!isset($filePath)) {
+			return false;
+		}
+		if (!$this->draw($size, WWW_ROOT.$filePath)) {
+			return false;
+		}
+		$attributes = array_merge(
+			array(
+				'width'  => $size,
+				'height' => $size,
+				'alt'    => ''
+			),
+			$attributes
+		);
+		return $this->Html->image($filePath, $attributes);
+	}
+
+/**
  * Bookmark code
  *
  * @param string $title
